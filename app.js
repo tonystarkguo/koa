@@ -38,6 +38,9 @@ app.use(convert(static(
 // app.use(bodyparser())
 app.use(json())
 app.use(logger())
+var cors = require('koa2-cors');
+//允许跨域
+app.use(cors());
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {

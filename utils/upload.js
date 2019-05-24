@@ -45,7 +45,6 @@ function uploadFile( ctx, options) {
   let fileType = options.fileType || 'common'
   let filePath = path.join( options.path,  fileType)
   let mkdirResult = mkdirsSync( filePath )
-
   return new Promise((resolve, reject) => {
     console.log('文件上传中...')
     let result = { 

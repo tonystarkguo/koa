@@ -25,6 +25,19 @@ const LOGIN=({account,password})=>`SELECT * FROM customer_login where login_name
 
 const register=({account,username,password,userurl="null"})=>`INSERT INTO customer_login(account,username,password,userurl) VALUES (${account},"${username}",${password},"${userurl}")`
 
+const USERINFO_TABLE=(customer_id)=>`SELECT
+	customer_name,
+	identity_card_no,
+	mobile_phone,
+	customer_email,
+	gender,
+	birthday,
+	customer_level,
+	user_money
+FROM
+	customer_inf
+WHERE
+	customer_id = "${customer_id}"`;
 const CITY=()=>`SELECT * from city`;
 module.exports = {
     CREATE_TABLE,
@@ -36,4 +49,5 @@ module.exports = {
     register,
     CHECKUSER,
     CITY,
+    USERINFO_TABLE
 }
