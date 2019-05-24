@@ -45,7 +45,6 @@ function uploadFile( ctx, options) {
   let fileType = options.fileType || 'common'
   let filePath = path.join( options.path,  fileType)
   let mkdirResult = mkdirsSync( filePath )
-
   return new Promise((resolve, reject) => {
     console.log('文件上传中...')
     let result = { 
@@ -68,7 +67,7 @@ function uploadFile( ctx, options) {
         result.success = true
         result.message = '文件上传成功'
         result.data = {
-          pictureUrl: `//${ctx.host}/image/${fileType}/${fileName}`
+          pictureUrl: `//${ctx.host}/images/${fileType}/${fileName}`
         }
         console.log('文件上传成功！')
         resolve(result)

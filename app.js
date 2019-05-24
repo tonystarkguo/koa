@@ -22,13 +22,13 @@ onerror(app)
 //   jsonLimit: '5mb',// 控制body的parse转换大小 default 1mb
 //   formLimit: '4096kb'  //  控制你post的大小  default 56kb
 // }))
-app.use(koaBody({
-  multipart: true,
-  formidable: {
-      maxFileSize: 200*1024*1024  // 设置上传文件大小最大限制，默认2M
-  }
-}));
-const staticPath = './public';
+// app.use(koaBody({
+//   multipart: true,
+//   formidable: {
+//       maxFileSize: 200*1024*1024  // 设置上传文件大小最大限制，默认2M
+//   }
+// }));
+const staticPath = '../public/images';
 app.use(convert(static(
   path.join( __dirname,  staticPath)
 )))
@@ -38,6 +38,9 @@ app.use(convert(static(
 // app.use(bodyparser())
 app.use(json())
 app.use(logger())
+var cors = require('koa2-cors');
+//允许跨域
+app.use(cors());
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
