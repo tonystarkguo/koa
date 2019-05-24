@@ -22,12 +22,12 @@ onerror(app)
 //   jsonLimit: '5mb',// 控制body的parse转换大小 default 1mb
 //   formLimit: '4096kb'  //  控制你post的大小  default 56kb
 // }))
-app.use(koaBody({
-  multipart: true,
-  formidable: {
-      maxFileSize: 200*1024*1024  // 设置上传文件大小最大限制，默认2M
-  }
-}));
+// app.use(koaBody({
+//   multipart: true,
+//   formidable: {
+//       maxFileSize: 200*1024*1024  // 设置上传文件大小最大限制，默认2M
+//   }
+// }));
 const staticPath = './public';
 app.use(convert(static(
   path.join( __dirname,  staticPath)

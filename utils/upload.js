@@ -58,6 +58,7 @@ function uploadFile( ctx, options) {
     busboy.on('file', function(fieldname, file, filename, encoding, mimetype) {
       let fileName = Math.random().toString(16).substr(2) + '.' + getSuffixName(filename)
       let _uploadFilePath = path.join( filePath, fileName )
+      console.log(filePath,_uploadFilePath)
       let saveTo = path.join(_uploadFilePath)
 
       // 文件保存到制定路径
@@ -68,7 +69,7 @@ function uploadFile( ctx, options) {
         result.success = true
         result.message = '文件上传成功'
         result.data = {
-          pictureUrl: `//${ctx.host}/image/${fileType}/${fileName}`
+          pictureUrl: `//${ctx.host}/images/${fileType}/${fileName}`
         }
         console.log('文件上传成功！')
         resolve(result)
@@ -76,7 +77,7 @@ function uploadFile( ctx, options) {
     })
 
     // 解析结束事件
-    busboy.on('finish', function( ) {
+    busboy.on('finish', function() {
       console.log('文件上结束')
       resolve(result)
     })
