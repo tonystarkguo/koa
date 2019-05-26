@@ -1,5 +1,5 @@
-const log4js = require('log4js')
-const {formatError, formatRes} = require('./formatLog')
+const log4js = require('log4js');
+const {formatError, formatRes} = require('./formatLog');
 log4js.configure({
     appenders: {
         error: {
@@ -25,18 +25,18 @@ log4js.configure({
         default: { appenders: ['response'], level: 'info'}
     },
     replaceConsole: true
-})
+});
 
 
-let logger = {}
-let errorLogger = log4js.getLogger('error')
-let resLogger = log4js.getLogger('response')
+let logger = {};
+let errorLogger = log4js.getLogger('error');
+let resLogger = log4js.getLogger('response');
 // 封装错误日志
 logger.errLogger = (ctx, error, resTime) => {
     if(ctx && error) {
         errorLogger.error(formatError(ctx, error, resTime))
     }
-}
+};
 // 封装响应日志
 logger.resLogger = (ctx, resTime) => {
     if(ctx) {
