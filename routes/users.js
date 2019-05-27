@@ -1,7 +1,7 @@
 const router = require('koa-router')();
 const initData = require("../utils/req");
 const {query} = require('../utils/query');
-const {LOGIN, register, CHECKUSER, USERINFO_TABLE} = require("../utils/sql");
+const {LOGIN, REGISTER, CHECKUSER, USERINFO_TABLE,CREATSERINFO} = require("../utils/sql");
 const log4js = require('../utils/log4js');
 
 const koaBody = require('koa-body')();
@@ -52,13 +52,15 @@ router.post('/login', koaBody, async (ctx, next) => {
 });
 
 router.post('/register', koaBody, async (ctx, next) => {
-    const {account = "", password = "", username = "", userurl = ""} = ctx.request.body;
+    const {account = "", password = "", username = "", userurl = "",birthday="",userstats=1,phone="",email="",gender="",register="",level="",money="",stats=0} = ctx.request.body||{};
     const UserCheck = await query(CHECKUSER(account, password));
     if (UserCheck.length > 0) {
         ctx.body = initData({code: "10003", "message": "当前账户已存在"})
     } else {
-        const data = await query(register({account, password, username, userurl}));
+        const data = await query(REGISTER({account, password, username, userurl,birthday,userstats,phone,email,gender,register,level,money,stats}));
         if (!!data) {
+            const id=data.insertId;
+           await query(CREATSERINFO({id,account, password, username, userurl,birthday,userstats,phone,email,gender,register,level,money}));
             ctx.body = initData({"message": "注册成功"})
         } else {
             ctx.body = initData({data})
@@ -70,6 +72,7 @@ router.post("/quit", koaBody, async (ctx, next) => {
     const {id = ""} = ctx.request.body || {};
     if (id) {
         ctx.session = null;
+
         ctx.body = initData({"message": "退出登陆成功"});
     } else {
         ctx.body = initData({code: "10006", "message": "退出登陆失败"});

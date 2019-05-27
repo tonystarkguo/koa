@@ -23,8 +23,36 @@ const CHECKUSER=(account)=>`SELECT * FROM customer_login where login_name="${acc
 
 const LOGIN=({account,password})=>`SELECT * FROM customer_login where login_name="${account}" AND password="${password}"`
 
-const register=({account,username,password,userurl="null"})=>`INSERT INTO customer_login(account,username,password,userurl) VALUES (${account},"${username}",${password},"${userurl}")`
-
+const REGISTER=({account,username,password,userurl="null",stats})=>`INSERT INTO customer_login(login_name,password,header_img,user_stats) VALUES ("${account}",${password},"${userurl}","${stats}")`
+const CREATSERINFO=({id,account, password, username, userurl,birthday,userstats,phone,email,gender,identity_card_type=0,identity_card_no=0,user_point="",register_time=""})=>`INSERT INTO customer_inf (
+	customer_id,
+	customer_name,
+	identity_card_type,
+	identity_card_no,
+	mobile_phone,
+	customer_email,
+	gender,
+	user_point,
+	birthday,
+	customer_level,
+	user_money
+)
+VALUES
+	(
+		"${id}",
+		"${username}",
+		1,
+		"",
+		
+		"${phone}",
+		"",
+		"${gender}",
+		0,
+		"1999-09-19 00:00:00",
+		0,
+		0
+	)`;
+const UPUSERINFO=({id,account, password, username, userurl,birthday,userstats,phone,email,gender,register,level,money})=>`UPDATE customer_inf SET mobile_phone=${phone},customer_email=${email},gender="${gender}",customer_name="${username}" WHERE(customer_id=${id});`;
 const USERINFO_TABLE=(customer_id)=>`SELECT
 	customer_name,
 	identity_card_no,
@@ -46,8 +74,10 @@ module.exports = {
     DELETE_TABLE,
     QUERY_TABLE,
     LOGIN,
-    register,
+    REGISTER,
     CHECKUSER,
     CITY,
-    USERINFO_TABLE
-}
+    USERINFO_TABLE,
+    UPUSERINFO,
+    CREATSERINFO,
+};
