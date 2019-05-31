@@ -76,10 +76,13 @@ app.use(require('koa-static')(__dirname + '/public'));
 // }));
 
 // logger
+/*不需要校验登录状态的接口*/
+const noCheckUrl=["/users/login","/users/register","/weather"];
 app.use(async (ctx, next) => {
     const start = new Date();
     /*出登陆注册外，其他接口都校验是否登陆*/
-    if ((!ctx.session["is_login"] )&& (ctx.url != "/users/login" && ctx.url != "/users/register")) {
+    let ishave=noCheckUrl.find((value) => {return ctx.url==value });
+    if ((!ctx.session["is_login"] )&& (!ishave)) {
         ctx.session.count = ctx.session.count + 1;
         ctx.body = {"code": 500, "messages": "账号未登录"};
     } else {
