@@ -1,8 +1,8 @@
 var formatRes = function (ctx, resTime) {
     var logText = new String();
-
+    logText +="\n" +"info";
     //响应日志开始
-    logText += "\n" + "*************** response log start ***************" + "\n";
+    logText += "\n" + "*************** response log start  ***************" + "\n";
 
     //添加请求日志
     logText += formatReqLog(ctx.request, resTime);
@@ -11,7 +11,7 @@ var formatRes = function (ctx, resTime) {
     logText += "response status: " + ctx.status + "\n";
 
     //响应内容
-    logText += "response body: " + "\n" + JSON.stringify(ctx.body) + "\n";
+    logText += "response body:" + "\n" + JSON.stringify(ctx.body) + "\n";
 
     //响应日志结束
     logText += "*************** response log end ***************" + "\n";

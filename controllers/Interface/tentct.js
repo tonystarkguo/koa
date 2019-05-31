@@ -1,5 +1,5 @@
 var http = require("http");
-const getweather=function(){
+const getweather=function(header){
     return new Promise(function(resolve,reject){
             var opt = {
                 host:'nodeapi.3g.qq.com',
@@ -11,18 +11,14 @@ const getweather=function(){
                 }
             };
             var backdata = '';
+            opt.headers=JSON.stringify(header);
             var req = http.request(opt, function(res) {
-                console.log("response: " + res.statusCode);
                 res.on('data',function(data){
                     backdata += data;
-                    // resolve(backdata);
-                    console.log("a1",backdata)
                 }).on('end', function(){
-                    console.log("data",backdata);
                     resolve(backdata);
                 });
             }).on('error', function(e) {
-                console.log("error: " + e.message);
                 reject(e.message)
             });
             req.end();

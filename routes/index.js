@@ -38,7 +38,6 @@ router.get('/city', async (ctx, next) => {
 router.post('/uploadfile', koaBody, async (ctx, next) => {
     // 上传单个文件
     const file = ctx.request.files.file; // 获取上传文件
-    console.log(file);
     // 创建可读流
     const reader = fs.createReadStream(file.path);
     let filePath = path.join(__dirname, '/public/upload/') + `/${file.name}`;
@@ -64,14 +63,15 @@ router.post('/uploadfiles', async (ctx, next) => {
 router.get('/weather',koaBody,async (ctx, next) => {
     const start = new Date();
     let data={};
-    const weather=await getweather().then(function (res) {
+    let header=ctx.request.header;
+    const weather=await getweather(header).then(function (res) {
         data= res;
     },function (error) {
         data= error;
     });
     ctx.body = JSON.parse(data);
-    const ms = new Date() - start
-    // log4js.resLogger(ctx, ms)
+    const ms = new Date() - start;
+    log4js.resLogger(ctx, ms)
 });
 
 module.exports = router;
