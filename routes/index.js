@@ -6,34 +6,9 @@ const log4js = require('../utils/log4js');
 const fs = require("fs");
 const koaBody = require('koa-body')();
 const path = require('path');
-var http = require("http");
+
 const {uploadFile} = require('../utils/upload');
-
-var getweather=function(){
-    var opt = {
-        host:'nodeapi.3g.qq.com',
-        port:'80',
-        method:'GET',
-        path:'/nodeapi/api/weather@getWeather',
-        headers:{
-            "Content-Type": 'application/json',
-        }
-    };
-
-    var backdata = '';
-    var req = http.request(opt, function(res) {
-        console.log("response: " + res.statusCode);
-        res.on('data',function(data){
-            backdata += data;
-            console.log("a1",backdata)
-        }).on('end', function(){
-            console.log("data",backdata)
-        });
-    }).on('error', function(e) {
-        console.log("error: " + e.message);
-    });
-    req.end();
-};
+const {getweather}=require("../controllers/Interface/tentct")
 
 router.get('/', koaBody, async (ctx, next) => {
     // await ctx.render('index', {
@@ -88,9 +63,13 @@ router.post('/uploadfiles', async (ctx, next) => {
 
 router.get('/weather',koaBody,async (ctx, next) => {
     const start = new Date();
-    const weathdata=await getweather();
-    console.log("123",weathdata)
-    ctx.body = {};
+    let data={};
+    const weather=await getweather().then(function (res) {
+        data= res;
+    },function (error) {
+        data= error;
+    });
+    ctx.body = JSON.parse(data);
     const ms = new Date() - start
     // log4js.resLogger(ctx, ms)
 });
