@@ -13,6 +13,7 @@ const path = require('path');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
+const fascinate = require('./routes/fascinate');
 const session = require('koa-session-minimal');
 const MysqlSession = require('koa-mysql-session');
 const mysqlConfig = require("./config/mysql_config");
@@ -77,7 +78,7 @@ app.use(require('koa-static')(__dirname + '/public'));
 
 // logger
 /*不需要校验登录状态的接口*/
-const noCheckUrl=["/users/login","/users/register","/weather"];
+const noCheckUrl=["/users/login","/users/register","/weather","/fascinate"];
 app.use(async (ctx, next) => {
     const start = new Date();
     /*出登陆注册外，其他接口都校验是否登陆*/
@@ -96,7 +97,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
-
+app.use(fascinate.routes(), fascinate.allowedMethods());
 // error-handling
 app.on('error', (err, ctx) => {
     log4js.errLogger(ctx, err);
