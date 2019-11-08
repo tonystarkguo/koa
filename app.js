@@ -10,7 +10,8 @@ const log4js = require('./utils/log4js');
 const convert = require('koa-convert');
 const static = require('koa-static');
 const path = require('path');
-
+const iosyu = require('./routes/iosyu')
+const douban = require('./routes/douban')
 const index = require('./routes/index');
 const users = require('./routes/users');
 const fascinate = require('./routes/fascinate');
@@ -98,6 +99,8 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods());
 app.use(users.routes(), users.allowedMethods());
 app.use(fascinate.routes(), fascinate.allowedMethods());
+app.use(iosyu.routes(), users.allowedMethods())
+app.use(douban.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
     log4js.errLogger(ctx, err);
