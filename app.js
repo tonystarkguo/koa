@@ -45,7 +45,7 @@ let timestamp = new Date().getTime();//当前的时间戳
 timestamp = timestamp + 1 * 60 * 1000;
 console.log(new Date(timestamp));
 let cookie = {
-    maxAge: 10 * 60 * 1000, // cookie有效时长
+    maxAge: 10 * 60 * 10000, // cookie有效时长
     expires: new Date(timestamp),  // cookie失效时间
     path: '/', // 写cookie所在的路径
     domain: '', // 写cookie所在的域名
